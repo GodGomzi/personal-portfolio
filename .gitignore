@@ -4,3 +4,4 @@
 
 # Production build folder
 /frontend/build
+.vercel

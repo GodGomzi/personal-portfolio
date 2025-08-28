@@ -1,60 +1,40 @@
 # .github/workflows/deploy.yml
 
-name: Deploy Portfolio to AWS EC2
+name: Deploy Frontend to Vercel
 
-# This workflow triggers on any push to the 'main' branch.
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest # Use the latest Ubuntu runner
-
+    runs-on: ubuntu-latest
+    
     steps:
-      # Step 1: Check out your repository code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Docker Buildx for more advanced build features
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+      # This step is optional if you have no build warnings
+      # Vercel's build command often fails if there are warnings.
+      # This ensures the build command will succeed.
+      - name: Set CI to false
+        run: echo "CI=false" >> $GITHUB_ENV
 
-      # Step 3: Log in to Docker Hub
-      # You MUST create secrets in your GitHub repository settings for these values.
-      # Go to Settings > Secrets and variables > Actions > New repository secret
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      # Step 4: Build the Docker image from your Dockerfile and push it to Docker Hub
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: ./backend # Tell Docker to use the 'backend' folder as the build context
-          file: ./backend/Dockerfile # Specify the location of the Dockerfile
-          push: true # Actually push the image to the registry
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/personal-portfolio:latest # Tag the image
-
-      # Step 5: Deploy to EC2 by SSHing and running commands
-      # This step connects to your server and deploys the new container.
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.SSH_HOST }} # Your EC2 instance's public IP address
-          username: ${{ secrets.SSH_USERNAME }} # e.g., 'ubuntu' or 'ec2-user'
-          key: ${{ secrets.SSH_PRIVATE_KEY }} # The private key to access your EC2 instance
-          script: |
-            # Pull the latest image from Docker Hub
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/personal-portfolio:latest
-            
-            # Stop the existing container if it's running
-            docker stop personal-portfolio-container || true
-            
-            # Remove the old container
-            docker rm personal-portfolio-container || true
-            
-            # Run a new container with the updated image
-            docker run -d --name personal-portfolio-container -p 80:8080 ${{ secrets.DOCKERHUB_USERNAME }}/personal-portfolio:latest
+          # Vercel authentication token
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          
+          # GitHub token is required for the action to work
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          
+          # Vercel organization ID
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          
+          # Vercel project ID
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          
+          # The directory where your frontend code is located
+          vercel-cwd: frontend

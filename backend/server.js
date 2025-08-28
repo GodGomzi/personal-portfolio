@@ -1,4 +1,5 @@
 // server.js
+// This is a simple Express server to serve the React frontend in production.
 const express = require('express');
 const path = require('path');
 
