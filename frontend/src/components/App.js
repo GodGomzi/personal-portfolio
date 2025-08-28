@@ -1,6 +1,6 @@
 // src/App.js
 import React from 'react';
-import './App.css';
+import '.components/App.css';
 import Header from './components/Header';
 import ProjectCard from './components/ProjectCard';
 

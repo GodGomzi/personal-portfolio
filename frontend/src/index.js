@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css'; // You can create this file for global styles if you wish
-import App from './App';
+import App from '.components/App';
 
 // This line finds the <div id="root"> from your public/index.html file.
 const rootElement = document.getElementById('root');
