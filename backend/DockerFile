@@ -1,0 +1,49 @@
+# --- Stage 1: Build the React Frontend ---
+# Use an official Node.js runtime as the parent image for the build stage.
+# 'as builder' names this stage so we can refer to it later.
+FROM node:18-alpine AS builder
+
+# Set the working directory inside the container for the frontend code.
+WORKDIR /app/frontend
+
+# Copy the frontend's package.json and package-lock.json files.
+COPY ../frontend/package*.json ./
+
+# Install the frontend dependencies.
+RUN npm install
+
+# Copy the rest of the frontend source code into the container.
+COPY ../frontend/ ./
+
+# Build the React application for production. 
+# This creates an optimized 'build' folder.
+RUN npm run build
+
+
+# --- Stage 2: Setup the Node.js Backend Server ---
+# Use a lightweight Node.js image for the final production container.
+FROM node:18-alpine
+
+# Set the working directory for the backend server.
+WORKDIR /app/backend
+
+# Copy the backend's package.json and package-lock.json.
+COPY ./package*.json ./
+
+# Install backend dependencies.
+RUN npm install
+
+# Copy the backend server code (server.js).
+COPY ./server.js ./
+
+# --- CRITICAL STEP ---
+# Copy the built React application from the 'builder' stage (Stage 1)
+# into a 'build' directory inside our final container.
+# This is where our Express server will look for the static files.
+COPY --from=builder /app/frontend/build ./build
+
+# Expose the port the server will run on.
+EXPOSE 8080
+
+# The command to run the application when the container starts.
+CMD [ "node", "server.js" ]
