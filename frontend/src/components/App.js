@@ -1,8 +1,13 @@
-// src/App.js
 import React from 'react';
+
+// FIX: Corrected path. Imports App.css from the same './components' directory.
 import './App.css';
-import Header from './components/Header';
-import ProjectCard from './components/ProjectCard';
+
+// FIX: Corrected path. Imports Header from the same './components' directory.
+import Header from './header.js'; 
+
+// FIX: Corrected path. Imports ProjectCard from the same './components' directory.
+import ProjectCard from './projectcard.js'; 
 
 function App() {
   return (
@@ -14,20 +19,18 @@ function App() {
           <h2>About Me</h2>
           <p>
             I am a passionate developer eager to build and deploy modern web applications. 
-            This portfolio was built to showcase my skills in React, Node.js, AWS, and DevOps practices.
+            This portfolio was built to showcase my skills in React, Node.js, Docker, and CI/CD practices.
           </p>
         </section>
 
         <section id="projects" className="section">
           <h2>Projects</h2>
           <div className="project-list">
-            {/* This is the project you are talking about in the interview! */}
             <ProjectCard 
               title="Personal Portfolio Website"
               description="Designed and deployed a responsive portfolio website to showcase projects and skills."
-              tech="React, Node.js, AWS S3 & EC2, Docker, GitHub Actions"
+              tech="React, Node.js, Docker, Vercel, GitHub Actions"
             />
-            {/* Add more ProjectCard components here as you build more projects */}
             <ProjectCard 
               title="Future Project 1"
               description="A brief description of another project you plan to build."
@@ -43,7 +46,6 @@ function App() {
             <li>React</li>
             <li>Node.js & Express</li>
             <li>HTML & CSS</li>
-            <li>AWS (S3, EC2)</li>
             <li>Docker</li>
             <li>CI/CD (GitHub Actions)</li>
             <li>Git & GitHub</li>
