@@ -5,7 +5,6 @@ Description
 This project is a comprehensive single-page application designed to showcase my skills and projects. It serves as a practical demonstration of modern web development concepts, including component-based frontend architecture, backend server setup, containerization with Docker, and automated deployment workflows. The entire development and deployment process was a valuable learning experience in troubleshooting real-world issues, particularly regarding file pathing and case-sensitivity in different operating environments.
 
 Key Features
-Responsive Design: Mobile-first layout that adapts to all screen sizes, from mobile phones to desktops.
 
 Component-Based: Built with reusable React components for a modular and maintainable codebase.
 
@@ -32,31 +31,24 @@ Node.js
 
 Installation & Setup
 Clone the repository:
-
 Bash
+git clone [(https://github.com/GodGomzi/personal-portfolio.git)]
 
-git clone https://github.com/your-username/your-repository-name.git
 Navigate to the project directory:
-
 Bash
+cd personal-portfolio
 
-cd your-repository-name
 Install Frontend Dependencies:
-
 Bash
-
 cd frontend
 npm install
+
 Run the Frontend Development Server:
-
 Bash
-
 npm start
 This will open the application in your browser at http://localhost:3000.
 
 Acknowledgements
 Create React App
-
 Vercel for seamless hosting.
-
 The open-source community for the actions and packages used.
