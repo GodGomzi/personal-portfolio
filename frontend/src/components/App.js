@@ -4,10 +4,10 @@ import React from 'react';
 import './App.css';
 
 // FIX: Corrected path. Imports Header from the same './components' directory.
-import Header from './header.js'; 
+import Header from './components/Header.js'; 
 
 // FIX: Corrected path. Imports ProjectCard from the same './components' directory.
-import ProjectCard from './projectcard.js'; 
+import ProjectCard from './components/ProjectCard.js'; 
 
 function App() {
   return (
